@@ -45,7 +45,7 @@
                         <ComboBoxItem Content="GIF" />
                         <ComboBoxItem Content="JPEG" />
                         <ComboBoxItem Content="PNG" />
-                        <ComboBoxItem Content="TFF" />
+                        <ComboBoxItem Content="TIFF" />
                     </ComboBox>
                 </StackPanel>
                 <!--  Resize button  -->

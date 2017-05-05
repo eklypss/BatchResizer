@@ -19,6 +19,7 @@ namespace BatchResizer.Service
         /// <param name="imageFormat">Target format of the images</param>
         public void ResizeImages(string folderPath, Size size, ISupportedImageFormat imageFormat)
         {
+            _logger.Debug("Trying to resize files in {0} to size: {1}x{2} and save as format: {3}", folderPath, size.Width, size.Height, imageFormat.DefaultExtension);
             using (ImageFactory imageFactory = new ImageFactory(true, false))
             {
                 foreach (var image in Directory.GetFiles(folderPath))
@@ -26,7 +27,7 @@ namespace BatchResizer.Service
                     if (IsImageFile(image))
                     {
                         _logger.Debug("Converting: {0}", image);
-                        var savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image));
+                        var savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image) + "." + imageFormat.DefaultExtension);
                         imageFactory.Load(image).Resize(size).Format(imageFormat).Save(savePath);
                     }
                     else _logger.Debug("{0} is not a valid image file.");

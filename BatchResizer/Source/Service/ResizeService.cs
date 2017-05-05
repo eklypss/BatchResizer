@@ -26,7 +26,7 @@ namespace BatchResizer.Service
                 {
                     if (IsImageFile(image))
                     {
-                        _logger.Debug("Converting: {0}", image);
+                        _logger.Debug("Resizing: {0}", image);
                         var savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image) + "." + imageFormat.DefaultExtension);
                         imageFactory.Load(image).Resize(size).Format(imageFormat).Save(savePath);
                     }

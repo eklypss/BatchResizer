@@ -15,7 +15,7 @@ namespace BatchResizer.ViewModel
         private string _selectedFolder;
         private int _imageTargetHeight;
         private int _imageTargetWidth;
-        private int _selectedImageFormatIndex = 0;
+        private int _selectedImageFormatIndex = -1;
         private ResizeService _resizeService;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -98,7 +98,8 @@ namespace BatchResizer.ViewModel
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(SelectedFolder);
+                if (string.IsNullOrWhiteSpace(SelectedFolder) || SelectedImageFormatIndex == -1 || ImageTargetHeight <= 0 || ImageTargetWidth <= 0) return false;
+                return true;
             }
         }
 

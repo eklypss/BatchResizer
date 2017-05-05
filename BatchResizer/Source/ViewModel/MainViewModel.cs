@@ -86,7 +86,6 @@ namespace BatchResizer.ViewModel
             {
                 SetProperty(ref _selectedImageFormatIndex, value, "SelectedImageFormatIndex");
                 RaisePropertyChanged("CanResize");
-                Console.WriteLine("selected index: " + _selectedImageFormatIndex);
                 ImageFormat = GetImageFormatForIndex(_selectedImageFormatIndex);
                 _logger.Debug("SelectedImageFormatIndex was changed to: {0}", value);
             }

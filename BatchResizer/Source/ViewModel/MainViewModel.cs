@@ -154,11 +154,11 @@ namespace BatchResizer.ViewModel
             _logger.Debug("Getting ImageFormat for index: {0}", index);
             switch (index)
             {
-                case 0: return new GifFormat() { Quality = 100, AnimationProcessMode = AnimationProcessMode.First };
+                case 0: return new GifFormat() { AnimationProcessMode = AnimationProcessMode.First };
                 case 1: return new JpegFormat() { Quality = 100 };
-                case 2: return new PngFormat() { Quality = 100 };
-                case 3: return new TiffFormat() { Quality = 100 };
-                default: return new PngFormat() { Quality = 100 };
+                case 2: return new PngFormat();
+                case 3: return new TiffFormat();
+                default: return new PngFormat();
             }
         }
     }

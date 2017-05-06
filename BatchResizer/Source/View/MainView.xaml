@@ -41,6 +41,7 @@
                     <TextBlock Margin="20,5,0,0" Text="Format:" />
                     <!--  Image format controls  -->
                     <ComboBox Margin="5,0,0,0" SelectedIndex="{Binding SelectedImageFormatIndex}">
+                        <ComboBoxItem Content="Original" />
                         <ComboBoxItem Content="GIF" />
                         <ComboBoxItem Content="JPEG" />
                         <ComboBoxItem Content="PNG" />

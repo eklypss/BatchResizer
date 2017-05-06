@@ -26,9 +26,19 @@ namespace BatchResizer.Service
                 {
                     if (IsImageFile(image))
                     {
+                        var savePath = string.Empty;
                         _logger.Debug($"Resizing: {image}");
-                        var savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image) + "." + imageFormat.DefaultExtension);
-                        imageFactory.Load(image).Resize(size).Format(imageFormat).Save(savePath);
+                        // bmp acts as the original file extension of the image, not as .bmp
+                        if (imageFormat.DefaultExtension == "bmp")
+                        {
+                            savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image));
+                            imageFactory.Load(image).Resize(size).Save(savePath);
+                        }
+                        else
+                        {
+                            savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image) + "." + imageFormat.DefaultExtension);
+                            imageFactory.Load(image).Resize(size).Format(imageFormat).Save(savePath);
+                        }
                     }
                     else _logger.Debug($"{image} is not a valid image file.");
                 }

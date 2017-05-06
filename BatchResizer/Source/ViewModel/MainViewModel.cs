@@ -44,7 +44,7 @@ namespace BatchResizer.ViewModel
             {
                 SetProperty(ref _selectedFolder, value, "SelectedFolder");
                 RaisePropertyChanged("CanResize");
-                _logger.Debug("SelectedFolder was changed to: {0}", value);
+                _logger.Debug($"SelectedFolder was changed to: {value}.");
             }
         }
 
@@ -58,7 +58,7 @@ namespace BatchResizer.ViewModel
             {
                 SetProperty(ref _imageTargetHeight, value, "ImageTargetHeight");
                 RaisePropertyChanged("CanResize");
-                _logger.Debug("ImageTargetHeight was changed to: {0}", value);
+                _logger.Debug($"ImageTargetHeight was changed to: {value}.");
             }
         }
 
@@ -72,7 +72,7 @@ namespace BatchResizer.ViewModel
             {
                 SetProperty(ref _imageTargetWidth, value, "ImageTargetWidth");
                 RaisePropertyChanged("CanResize");
-                _logger.Debug("ImageTargetWidth was changed to: {0}", value);
+                _logger.Debug($"ImageTargetWidth was changed to: {value}.");
             }
         }
 
@@ -87,7 +87,7 @@ namespace BatchResizer.ViewModel
                 SetProperty(ref _selectedImageFormatIndex, value, "SelectedImageFormatIndex");
                 RaisePropertyChanged("CanResize");
                 ImageFormat = GetImageFormatForIndex(_selectedImageFormatIndex);
-                _logger.Debug("SelectedImageFormatIndex was changed to: {0}", value);
+                _logger.Debug($"SelectedImageFormatIndex was changed to: {value}.");
             }
         }
 
@@ -115,8 +115,8 @@ namespace BatchResizer.ViewModel
             }
             catch (Exception ex)
             {
-                _logger.Error("Error occured during resizing: {0}", ex.Message);
-                _logger.Error("{0} {1}", ex.Source, ex.StackTrace);
+                _logger.Error($"Error occured during resizing: {ex.Message}.");
+                _logger.Error($"Additional information, source: {ex.Source}, stacktrace: {ex.StackTrace}.");
             }
             finally
             {
@@ -139,7 +139,7 @@ namespace BatchResizer.ViewModel
                 }
                 else
                 {
-                    _logger.Warn("Unexpected DialogResult received: {0}", dialogResult.ToString());
+                    _logger.Warn($"Unexpected DialogResult received: {dialogResult.ToString()}.");
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace BatchResizer.ViewModel
         /// <returns></returns>
         private ISupportedImageFormat GetImageFormatForIndex(int index)
         {
-            _logger.Debug("Getting ImageFormat for index: {0}", index);
+            _logger.Debug($"Getting ImageFormat for index: {index}.");
             switch (index)
             {
                 case 0: return new GifFormat() { AnimationProcessMode = AnimationProcessMode.First };

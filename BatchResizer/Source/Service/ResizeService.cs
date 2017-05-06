@@ -19,18 +19,18 @@ namespace BatchResizer.Service
         /// <param name="imageFormat">Target format of the images</param>
         public void ResizeImages(string folderPath, Size size, ISupportedImageFormat imageFormat)
         {
-            _logger.Debug("Trying to resize files in {0} to size: {1}x{2} and save as format: {3}", folderPath, size.Width, size.Height, imageFormat.DefaultExtension);
+            _logger.Debug($"Trying to resize files in {folderPath} to size: {size.Width}x{size.Height} and save as format: {imageFormat.DefaultExtension}");
             using (ImageFactory imageFactory = new ImageFactory(true, false))
             {
                 foreach (var image in Directory.GetFiles(folderPath))
                 {
                     if (IsImageFile(image))
                     {
-                        _logger.Debug("Resizing: {0}", image);
+                        _logger.Debug($"Resizing: {image}");
                         var savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image) + "." + imageFormat.DefaultExtension);
                         imageFactory.Load(image).Resize(size).Format(imageFormat).Save(savePath);
                     }
-                    else _logger.Debug("{0} is not a valid image file.");
+                    else _logger.Debug($"{image} is not a valid image file.");
                 }
             }
             Process.Start(Path.Combine(folderPath, "Resized"));
@@ -43,7 +43,7 @@ namespace BatchResizer.Service
         /// <returns></returns>
         private bool IsImageFile(string filePath)
         {
-            _logger.Debug("Checking whether {0} is a valid image file.", filePath);
+            _logger.Debug($"Checking whether {filePath} is a valid image file.");
             if (filePath.EndsWith(".png") || filePath.EndsWith(".jpg") || filePath.EndsWith(".jpeg") || filePath.EndsWith(".gif") || filePath.EndsWith(".tiff")) return true;
             else return false;
         }

@@ -113,10 +113,9 @@ namespace BatchResizer.ViewModel
             {
                 _resizeService.ResizeImages(SelectedFolder, new Size(ImageTargetHeight, ImageTargetWidth), ImageFormat);
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.Error($"Error occured during resizing: {ex.Message}.");
-                _logger.Error($"Additional information, source: {ex.Source}, stacktrace: {ex.StackTrace}.");
+                _logger.Error($"Error occured during resizing.");
             }
             finally
             {

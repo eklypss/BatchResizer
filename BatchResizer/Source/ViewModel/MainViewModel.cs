@@ -1,10 +1,10 @@
 ﻿using BatchResizer.Command;
+using BatchResizer.Enum;
 using BatchResizer.Service;
 using ImageProcessor.Imaging;
 using ImageProcessor.Imaging.Formats;
 using NLog;
 using Prism.Mvvm;
-using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -15,11 +15,14 @@ namespace BatchResizer.ViewModel
         private string _selectedFolder;
         private int _imageTargetHeight;
         private int _imageTargetWidth;
+        private int _imageResizePercentage = 100;
         private int _selectedImageFormatIndex = -1;
+        private int _selectedResizeModeIndex = -1;
         private ResizeService _resizeService;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         public ISupportedImageFormat ImageFormat { get; set; }
+        public ResizeModes ResizeMode { get; set; } = ResizeModes.NotSet;
         public RelayCommand ResizeCommand { get; set; }
         public RelayCommand BrowseCommand { get; set; }
 
@@ -77,6 +80,20 @@ namespace BatchResizer.ViewModel
         }
 
         /// <summary>
+        /// Property/notifier for _imageResizePercentage.
+        /// </summary>
+        public int ImageResizePercentage
+        {
+            get { return _imageResizePercentage; }
+            set
+            {
+                SetProperty(ref _imageResizePercentage, value, "ImageResizePercentage");
+                RaisePropertyChanged("CanResize");
+                _logger.Debug($"ImageResizePercentage was changed to: {value}%.");
+            }
+        }
+
+        /// <summary>
         /// Property/notifier for <see cref="_selectedImageFormatIndex"/>
         /// </summary>
         public int SelectedImageFormatIndex
@@ -92,15 +109,64 @@ namespace BatchResizer.ViewModel
         }
 
         /// <summary>
+        /// Property/notifier for <see cref="_selectedResizeModeIndex"/>
+        /// </summary>
+        public int SelectedResizeModeIndex
+        {
+            get { return _selectedResizeModeIndex; }
+            set
+            {
+                SetProperty(ref _selectedResizeModeIndex, value, "SelectedResizeModeIndex");
+                ResizeMode = (ResizeModes)value;
+                RaisePropertyChanged("IsSpecifiedResizeModeSelected");
+                RaisePropertyChanged("IsPercentageResizeModeSelected");
+                _logger.Debug($"SelectedResizeModeIndex was changed to: {value}.");
+            }
+        }
+
+        /// <summary>
         /// Boolean that determines whether the <see cref="ResizeCommand"/> can be executed or not, depending if <see cref="SelectedFolder"/> is a valid path.
         /// </summary>
         public bool CanResize
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(SelectedFolder) || SelectedImageFormatIndex == -1 || ImageTargetHeight <= 0 || ImageTargetWidth <= 0) return false;
-                return true;
+                if (string.IsNullOrWhiteSpace(SelectedFolder) || SelectedImageFormatIndex == -1 || ResizeMode == ResizeModes.NotSet) return false;
+                switch (ResizeMode)
+                {
+                    case ResizeModes.Specified:
+                    {
+                        if (ImageTargetHeight > Settings.MAX_IMAGE_HEIGHT || ImageTargetWidth > Settings.MAX_IMAGE_WIDTH || ImageTargetHeight < Settings.MIN_IMAGE_HEIGHT || ImageTargetWidth < Settings.MIN_IMAGE_WIDTH) return false;
+                        return true;
+                    }
+                    case ResizeModes.Percentage:
+                    {
+                        if (ImageResizePercentage > Settings.MAX_RESIZE_PERCENTAGE || ImageResizePercentage < Settings.MIN_RESIZE_PERCENTAGE) return false;
+                        return true;
+                    }
+                    default:
+                    {
+                        _logger.Warn("Could not determine ResizeMode, returning false.");
+                        return false;
+                    }
+                }
             }
+        }
+
+        /// <summary>
+        /// Boolean that determines whether <see cref="ResizeMode"/> equals to <see cref="ResizeModes.Specified"/>.
+        /// </summary>
+        public bool IsSpecifiedResizeModeSelected
+        {
+            get { return (ResizeMode == ResizeModes.Specified) ? true : false; }
+        }
+
+        /// <summary>
+        /// Boolean that determines whether <see cref="ResizeMode"/> equals to <see cref="ResizeModes.Percentage"/>.
+        /// </summary>
+        public bool IsPercentageResizeModeSelected
+        {
+            get { return (ResizeMode == ResizeModes.Percentage) ? true : false; }
         }
 
         /// <summary>
@@ -135,6 +201,7 @@ namespace BatchResizer.ViewModel
                 if (dialogResult == DialogResult.OK)
                 {
                     SelectedFolder = selectFolderDialog.SelectedPath;
+                    _logger.Debug($"Specified folder was selected: {selectFolderDialog.SelectedPath}.");
                 }
                 else
                 {

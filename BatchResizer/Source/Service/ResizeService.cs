@@ -1,8 +1,8 @@
-﻿using ImageProcessor;
+﻿using BatchResizer.Enum;
+using ImageProcessor;
 using ImageProcessor.Imaging.Formats;
 using NLog;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 
 namespace BatchResizer.Service
@@ -17,7 +17,7 @@ namespace BatchResizer.Service
         /// <param name="folderPath">Path of the folder</param>
         /// <param name="size">Target size of the images</param>
         /// <param name="imageFormat">Target format of the images</param>
-        public void ResizeImages(string folderPath, Size size, ISupportedImageFormat imageFormat)
+        public void ResizeImages(string folderPath, ResizeModes resizeMode, ISupportedImageFormat imageFormat)
         {
             _logger.Debug($"Trying to resize files in {folderPath} to size: {size.Width}x{size.Height} and save as format: {imageFormat.DefaultExtension}");
             using (ImageFactory imageFactory = new ImageFactory(true, false))

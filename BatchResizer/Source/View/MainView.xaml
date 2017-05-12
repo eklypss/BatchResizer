@@ -8,7 +8,7 @@
     xmlns:vm="clr-namespace:BatchResizer.ViewModel"
     Title="BatchResizer"
     Width="525"
-    Height="235"
+    Height="300"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     TextElement.FontSize="14"
@@ -32,12 +32,25 @@
                         Command="{Binding BrowseCommand}"
                         Content="Browse" />
                 </StackPanel>
+                <ComboBox
+                    Width="200"
+                    Margin="5"
+                    SelectedIndex="{Binding SelectedResizeModeIndex, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem Content="Percentage" />
+                    <ComboBoxItem Content="Specified" />
+                </ComboBox>
                 <!--  Image size controls  -->
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock Margin="5" Text="Height:" />
-                    <TextBox Margin="5,0,0,0" Text="{Binding ImageTargetHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox
+                        Margin="5,0,0,0"
+                        IsEnabled="{Binding IsSpecifiedResizeModeSelected}"
+                        Text="{Binding ImageTargetHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Margin="20,5,0,0" Text="Height:" />
-                    <TextBox Margin="5,0,0,0" Text="{Binding ImageTargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox
+                        Margin="5,0,0,0"
+                        IsEnabled="{Binding IsSpecifiedResizeModeSelected}"
+                        Text="{Binding ImageTargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Margin="20,5,0,0" Text="Format:" />
                     <!--  Image format controls  -->
                     <ComboBox Margin="5,0,0,0" SelectedIndex="{Binding SelectedImageFormatIndex}">
@@ -48,6 +61,16 @@
                         <ComboBoxItem Content="TIFF" />
                     </ComboBox>
                 </StackPanel>
+                <!--  Percentage resize mode  -->
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock Margin="5" Text="Percentage:" />
+                    <TextBox
+                        Margin="5,0,0,0"
+                        IsEnabled="{Binding IsPercentageResizeModeSelected}"
+                        Text="{Binding ImageResizePercentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Margin="5" Text="%" />
+                </StackPanel>
+
                 <!--  Resize button  -->
                 <StackPanel Margin="15">
                     <Button

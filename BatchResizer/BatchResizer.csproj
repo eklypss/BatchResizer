@@ -96,7 +96,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Source\Command\RelayCommand.cs" />
+    <Compile Include="Source\Enum\ResizeModes.cs" />
     <Compile Include="Source\Service\ResizeService.cs" />
+    <Compile Include="Source\Settings\Settings.cs" />
     <Compile Include="Source\ViewModel\MainViewModel.cs" />
     <Page Include="Source\View\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>

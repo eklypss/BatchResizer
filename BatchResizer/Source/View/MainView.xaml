@@ -46,15 +46,6 @@
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock
                         Margin="5"
-                        Text="Height:"
-                        ToolTip="Target height of the resized image." />
-                    <TextBox
-                        Margin="5,0,0,0"
-                        IsEnabled="{Binding IsSpecifiedResizeModeSelected}"
-                        Text="{Binding ImageTargetHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        ToolTip="Target height of the resized image." />
-                    <TextBlock
-                        Margin="20,5,0,0"
                         Text="Width:"
                         ToolTip="Target width of the resized image." />
                     <TextBox
@@ -62,6 +53,16 @@
                         IsEnabled="{Binding IsSpecifiedResizeModeSelected}"
                         Text="{Binding ImageTargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="Target width of the resized image." />
+
+                    <TextBlock
+                        Margin="20,5,0,0"
+                        Text="Height:"
+                        ToolTip="Target height of the resized image." />
+                    <TextBox
+                        Margin="5,0,0,0"
+                        IsEnabled="{Binding IsSpecifiedResizeModeSelected}"
+                        Text="{Binding ImageTargetHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="Target height of the resized image." />
                     <TextBlock Margin="20,5,0,0" Text="Format:" />
                     <!--  Image format controls  -->
                     <ComboBox

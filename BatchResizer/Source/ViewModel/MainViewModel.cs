@@ -1,12 +1,12 @@
-﻿using BatchResizer.Command;
+﻿using System.Drawing;
+using System.Windows.Forms;
+using BatchResizer.Command;
 using BatchResizer.Enum;
 using BatchResizer.Service;
 using ImageProcessor.Imaging;
 using ImageProcessor.Imaging.Formats;
 using NLog;
 using Prism.Mvvm;
-using System.Drawing;
-using System.Windows.Forms;
 
 namespace BatchResizer.ViewModel
 {
@@ -27,7 +27,8 @@ namespace BatchResizer.ViewModel
         public RelayCommand BrowseCommand { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MainViewModel"/> class and initializes <see cref="ResizeCommand"/>, <see cref="BrowseCommand"/> and <see cref="ResizeService"/>.
+        /// Initializes a new instance of <see cref="MainViewModel"/> class and initializes <see
+        /// cref="ResizeCommand"/>, <see cref="BrowseCommand"/> and <see cref="ResizeService"/>.
         /// </summary>
         public MainViewModel()
         {
@@ -125,7 +126,8 @@ namespace BatchResizer.ViewModel
         }
 
         /// <summary>
-        /// Boolean that determines whether the <see cref="ResizeCommand"/> can be executed or not, depending if <see cref="SelectedFolder"/> is a valid path.
+        /// Boolean that determines whether the <see cref="ResizeCommand"/> can be executed or not,
+        /// depending if <see cref="SelectedFolder"/> is a valid path.
         /// </summary>
         public bool CanResize
         {
@@ -177,7 +179,19 @@ namespace BatchResizer.ViewModel
             _logger.Debug("ResizeCommand was called.");
             try
             {
-                _resizeService.ResizeImages(SelectedFolder, new Size(ImageTargetHeight, ImageTargetWidth), ImageFormat);
+                switch (ResizeMode)
+                {
+                    case ResizeModes.Specified:
+                    {
+                        _resizeService.ResizeImagesToSize(SelectedFolder, new Size(ImageTargetHeight, ImageTargetWidth), ImageFormat);
+                        break;
+                    }
+                    case ResizeModes.Percentage:
+                    {
+                        _resizeService.ResizeImagesToPercentage(SelectedFolder, ImageResizePercentage, ImageFormat);
+                        break;
+                    }
+                }
             }
             catch
             {
@@ -190,7 +204,8 @@ namespace BatchResizer.ViewModel
         }
 
         /// <summary>
-        /// Creates and displays the <see cref="FolderBrowserDialog"/> for the <see cref="BrowseCommand"/> used by the Browse button.
+        /// Creates and displays the <see cref="FolderBrowserDialog"/> for the <see
+        /// cref="BrowseCommand"/> used by the Browse button.
         /// </summary>
         private void Browse()
         {

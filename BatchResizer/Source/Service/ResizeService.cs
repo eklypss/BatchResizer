@@ -1,9 +1,10 @@
-﻿using BatchResizer.Enum;
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using ImageProcessor;
 using ImageProcessor.Imaging.Formats;
 using NLog;
-using System.Diagnostics;
-using System.IO;
 
 namespace BatchResizer.Service
 {
@@ -17,7 +18,7 @@ namespace BatchResizer.Service
         /// <param name="folderPath">Path of the folder</param>
         /// <param name="size">Target size of the images</param>
         /// <param name="imageFormat">Target format of the images</param>
-        public void ResizeImages(string folderPath, ResizeModes resizeMode, ISupportedImageFormat imageFormat)
+        public void ResizeImagesToSize(string folderPath, Size size, ISupportedImageFormat imageFormat)
         {
             _logger.Debug($"Trying to resize files in {folderPath} to size: {size.Width}x{size.Height} and save as format: {imageFormat.DefaultExtension}");
             using (ImageFactory imageFactory = new ImageFactory(true, false))
@@ -39,6 +40,31 @@ namespace BatchResizer.Service
                             savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image) + "." + imageFormat.DefaultExtension);
                             imageFactory.Load(image).Resize(size).Format(imageFormat).Save(savePath);
                         }
+                    }
+                    else _logger.Debug($"{image} is not a valid image file.");
+                }
+            }
+            Process.Start(Path.Combine(folderPath, "Resized"));
+        }
+
+        public void ResizeImagesToPercentage(string folderPath, float resizePercentage, ISupportedImageFormat imageFormat)
+        {
+            using (ImageFactory imageFactory = new ImageFactory(true, false))
+            {
+                foreach (var image in Directory.GetFiles(folderPath))
+                {
+                    if (IsImageFile(image))
+                    {
+                        var loadedImage = imageFactory.Load(image);
+                        _logger.Debug($"Resizing: {loadedImage.ImagePath}");
+                        _logger.Debug($"Original size: {loadedImage.Image.Width}x{loadedImage.Image.Height}.");
+                        var savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image) + "." + imageFormat.DefaultExtension);
+                        double percentage = resizePercentage / 100;
+                        double height = percentage * loadedImage.Image.Height;
+                        double width = percentage * loadedImage.Image.Width;
+                        _logger.Debug($"new size: {width}x{height}");
+                        Size percentageSize = new Size(Convert.ToInt32(height), Convert.ToInt32(width));
+                        loadedImage.Resize(percentageSize).Format(imageFormat).Save(savePath);
                     }
                     else _logger.Debug($"{image} is not a valid image file.");
                 }

@@ -186,7 +186,7 @@ namespace BatchResizer.ViewModel
         }
 
         /// <summary>
-        /// Performs the resizing of the images.
+        /// Performs the resizing of the images by using <see cref="ResizeService"/>.
         /// </summary>
         private void Resize()
         {

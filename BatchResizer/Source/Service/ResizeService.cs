@@ -16,6 +16,7 @@ namespace BatchResizer.Service
         /// Resizes images in specified folder to specified <see cref="Size"/> and <see cref="ISupportedImageFormat"/>.
         /// </summary>
         /// <param name="folderPath">Path of the folder</param>
+        /// <param name="backupOriginal">Determines whether original files are backed up.</param>
         /// <param name="size">Target size of the images</param>
         /// <param name="imageFormat">Target format of the images</param>
         public void ResizeImagesToSize(string folderPath, bool backupOriginal, Size size, ISupportedImageFormat imageFormat)
@@ -42,6 +43,7 @@ namespace BatchResizer.Service
         /// 50% would be in half, 200% double the size etc.
         /// </summary>
         /// <param name="folderPath">Path of the folder</param>
+        /// <param name="backupOriginal">Determines whether original files are backed up.</param>
         /// <param name="resizePercentage">Target percentage to resize images with.</param>
         /// <param name="imageFormat">Target format of the images</param>
         public void ResizeImagesToPercentage(string folderPath, bool backupOriginal, float resizePercentage, ISupportedImageFormat imageFormat)

@@ -34,6 +34,7 @@
                         Content="Browse"
                         ToolTip="Click to select a folder to resize." />
                 </StackPanel>
+                <!--  Resize mode controls  -->
                 <ComboBox
                     Width="200"
                     Margin="5"

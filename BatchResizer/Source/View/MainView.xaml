@@ -31,30 +31,43 @@
                     <Button
                         Margin="10,0"
                         Command="{Binding BrowseCommand}"
-                        Content="Browse" />
+                        Content="Browse"
+                        ToolTip="Click to select a folder to resize." />
                 </StackPanel>
                 <ComboBox
                     Width="200"
                     Margin="5"
-                    SelectedIndex="{Binding SelectedResizeModeIndex, UpdateSourceTrigger=PropertyChanged}">
+                    SelectedIndex="{Binding SelectedResizeModeIndex, UpdateSourceTrigger=PropertyChanged}"
+                    ToolTip="Select how the images should be resized.">
                     <ComboBoxItem Content="Percentage" />
                     <ComboBoxItem Content="Specified" />
                 </ComboBox>
                 <!--  Image size controls  -->
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock Margin="5" Text="Height:" />
+                    <TextBlock
+                        Margin="5"
+                        Text="Height:"
+                        ToolTip="Target height of the resized image." />
                     <TextBox
                         Margin="5,0,0,0"
                         IsEnabled="{Binding IsSpecifiedResizeModeSelected}"
-                        Text="{Binding ImageTargetHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBlock Margin="20,5,0,0" Text="Height:" />
+                        Text="{Binding ImageTargetHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="Target height of the resized image." />
+                    <TextBlock
+                        Margin="20,5,0,0"
+                        Text="Width:"
+                        ToolTip="Target width of the resized image." />
                     <TextBox
                         Margin="5,0,0,0"
                         IsEnabled="{Binding IsSpecifiedResizeModeSelected}"
-                        Text="{Binding ImageTargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding ImageTargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="Target width of the resized image." />
                     <TextBlock Margin="20,5,0,0" Text="Format:" />
                     <!--  Image format controls  -->
-                    <ComboBox Margin="5,0,0,0" SelectedIndex="{Binding SelectedImageFormatIndex}">
+                    <ComboBox
+                        Margin="5,0,0,0"
+                        SelectedIndex="{Binding SelectedImageFormatIndex}"
+                        ToolTip="Target file format of the resized image.">
                         <ComboBoxItem Content="BMP" />
                         <ComboBoxItem Content="GIF" />
                         <ComboBoxItem Content="JPEG" />
@@ -64,22 +77,30 @@
                 </StackPanel>
                 <!--  Percentage resize mode  -->
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock Margin="5" Text="Percentage:" />
+                    <TextBlock
+                        Margin="5"
+                        Text="Percentage:"
+                        ToolTip="Percentage to resize the image to. 100% equals original size." />
                     <TextBox
                         Margin="5,0,0,0"
                         IsEnabled="{Binding IsPercentageResizeModeSelected}"
-                        Text="{Binding ImageResizePercentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding ImageResizePercentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTip="Percentage to resize the image to. 100% equals original size." />
                     <TextBlock Margin="5" Text="%" />
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <CheckBox Content="Backup original" IsChecked="{Binding BackupOriginal}" />
+                    <CheckBox
+                        Content="Backup original"
+                        IsChecked="{Binding BackupOriginal}"
+                        ToolTip="Should the program make backups of the original image files before resizing?" />
                 </StackPanel>
                 <!--  Resize button  -->
                 <StackPanel Margin="15">
                     <Button
                         Command="{Binding ResizeCommand}"
                         Content="Resize"
-                        IsEnabled="{Binding CanResize}" />
+                        IsEnabled="{Binding CanResize}"
+                        ToolTip="Clicking this button will start the resizing process." />
                 </StackPanel>
             </StackPanel>
         </Border>

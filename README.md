@@ -1,5 +1,5 @@
 # BatchResizer
- ![](http://i.imgur.com/bIvQ2m3.png)
+ ![](http://i.imgur.com/GGIjg0O.png)
 
 Small utility tool for resizing images in batch, made with WPF using the MVVM pattern with Prism.
 

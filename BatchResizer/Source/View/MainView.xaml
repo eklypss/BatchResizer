@@ -14,6 +14,7 @@
     TextElement.FontSize="14"
     TextElement.FontWeight="Medium"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    WindowStyle="ToolWindow"
     mc:Ignorable="d">
     <!--  Main grid  -->
     <Grid>

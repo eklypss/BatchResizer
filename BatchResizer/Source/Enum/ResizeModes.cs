@@ -1,5 +1,8 @@
-﻿namespace BatchResizer.Enum
+﻿using System;
+
+namespace BatchResizer.Enum
 {
+    [Flags]
     public enum ResizeModes
     {
         NotSet = -1,

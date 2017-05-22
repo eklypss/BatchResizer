@@ -47,6 +47,13 @@ namespace BatchResizer.Service
             Process.Start(Path.Combine(folderPath, "Resized"));
         }
 
+        /// <summary>
+        /// Resizes images in specified folder to specific percentage. 100% equals the original size,
+        /// 50% would be in half, 200% double the size etc.
+        /// </summary>
+        /// <param name="folderPath">Path of the folder</param>
+        /// <param name="resizePercentage">Target percentage to resize images with.</param>
+        /// <param name="imageFormat">Target format of the images</param>
         public void ResizeImagesToPercentage(string folderPath, float resizePercentage, ISupportedImageFormat imageFormat)
         {
             using (ImageFactory imageFactory = new ImageFactory(true, false))
@@ -62,8 +69,8 @@ namespace BatchResizer.Service
                         double percentage = resizePercentage / 100;
                         double height = percentage * loadedImage.Image.Height;
                         double width = percentage * loadedImage.Image.Width;
-                        _logger.Debug($"new size: {width}x{height}");
-                        Size percentageSize = new Size(Convert.ToInt32(height), Convert.ToInt32(width));
+                        Size percentageSize = new Size(Convert.ToInt32(width), Convert.ToInt32(height));
+                        _logger.Debug($"New size: {percentageSize.Width}x{percentageSize.Height}.");
                         loadedImage.Resize(percentageSize).Format(imageFormat).Save(savePath);
                     }
                     else _logger.Debug($"{image} is not a valid image file.");

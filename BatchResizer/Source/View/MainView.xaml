@@ -71,7 +71,9 @@
                         Text="{Binding ImageResizePercentage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Margin="5" Text="%" />
                 </StackPanel>
-
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <CheckBox Content="Backup original" IsChecked="{Binding BackupOriginal}" />
+                </StackPanel>
                 <!--  Resize button  -->
                 <StackPanel Margin="15">
                     <Button

@@ -18,6 +18,7 @@ namespace BatchResizer.ViewModel
         private int _imageResizePercentage = 100;
         private int _selectedImageFormatIndex = -1;
         private int _selectedResizeModeIndex = -1;
+        private bool _backupOriginal = true;
         private ResizeService _resizeService;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -126,6 +127,19 @@ namespace BatchResizer.ViewModel
         }
 
         /// <summary>
+        /// Property/notifier for <see cref="_backupOriginal"/>
+        /// </summary>
+        public bool BackupOriginal
+        {
+            get { return _backupOriginal; }
+            set
+            {
+                SetProperty(ref _backupOriginal, value, "BackupOriginal");
+                _logger.Debug($"BackupOriginal was changed to: {value}.");
+            }
+        }
+
+        /// <summary>
         /// Boolean that determines whether the <see cref="ResizeCommand"/> can be executed or not,
         /// depending if <see cref="SelectedFolder"/> is a valid path.
         /// </summary>
@@ -183,12 +197,12 @@ namespace BatchResizer.ViewModel
                 {
                     case ResizeModes.Specified:
                     {
-                        _resizeService.ResizeImagesToSize(SelectedFolder, new Size(ImageTargetHeight, ImageTargetWidth), ImageFormat);
+                        _resizeService.ResizeImagesToSize(SelectedFolder, BackupOriginal, new Size(ImageTargetHeight, ImageTargetWidth), ImageFormat);
                         break;
                     }
                     case ResizeModes.Percentage:
                     {
-                        _resizeService.ResizeImagesToPercentage(SelectedFolder, ImageResizePercentage, ImageFormat);
+                        _resizeService.ResizeImagesToPercentage(SelectedFolder, BackupOriginal, ImageResizePercentage, ImageFormat);
                         break;
                     }
                 }

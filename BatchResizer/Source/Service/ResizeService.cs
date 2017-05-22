@@ -18,7 +18,7 @@ namespace BatchResizer.Service
         /// <param name="folderPath">Path of the folder</param>
         /// <param name="size">Target size of the images</param>
         /// <param name="imageFormat">Target format of the images</param>
-        public void ResizeImagesToSize(string folderPath, Size size, ISupportedImageFormat imageFormat)
+        public void ResizeImagesToSize(string folderPath, bool backupOriginal, Size size, ISupportedImageFormat imageFormat)
         {
             _logger.Debug($"Trying to resize files in {folderPath} to size: {size.Width}x{size.Height} and save as format: {imageFormat.DefaultExtension}");
             using (ImageFactory imageFactory = new ImageFactory(true, false))
@@ -27,9 +27,8 @@ namespace BatchResizer.Service
                 {
                     if (IsImageFile(image))
                     {
-                        var savePath = string.Empty;
                         _logger.Debug($"Resizing: {image}");
-                        savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image) + "." + imageFormat.DefaultExtension);
+                        string savePath = (backupOriginal) ? Path.Combine(folderPath, "Resized", Path.GetFileName(image)) : savePath = Path.Combine(folderPath, Path.GetFileName(image));
                         imageFactory.Load(image).Resize(size).Format(imageFormat).Save(savePath);
                     }
                     else _logger.Debug($"{image} is not a valid image file.");
@@ -45,7 +44,7 @@ namespace BatchResizer.Service
         /// <param name="folderPath">Path of the folder</param>
         /// <param name="resizePercentage">Target percentage to resize images with.</param>
         /// <param name="imageFormat">Target format of the images</param>
-        public void ResizeImagesToPercentage(string folderPath, float resizePercentage, ISupportedImageFormat imageFormat)
+        public void ResizeImagesToPercentage(string folderPath, bool backupOriginal, float resizePercentage, ISupportedImageFormat imageFormat)
         {
             using (ImageFactory imageFactory = new ImageFactory(true, false))
             {
@@ -56,7 +55,8 @@ namespace BatchResizer.Service
                         var loadedImage = imageFactory.Load(image);
                         _logger.Debug($"Resizing: {loadedImage.ImagePath}");
                         _logger.Debug($"Original size: {loadedImage.Image.Width}x{loadedImage.Image.Height}.");
-                        var savePath = Path.Combine(folderPath, "Resized", Path.GetFileName(image) + "." + imageFormat.DefaultExtension);
+                        string savePath = (backupOriginal) ? Path.Combine(folderPath, "Resized", Path.GetFileName(image)) : savePath = Path.Combine(folderPath, Path.GetFileName(image));
+                        _logger.Debug($"Save path set to: {folderPath}.");
                         double percentage = resizePercentage / 100;
                         double height = percentage * loadedImage.Image.Height;
                         double width = percentage * loadedImage.Image.Width;

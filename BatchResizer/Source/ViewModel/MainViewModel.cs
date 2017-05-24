@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using BatchResizer.Command;
 using BatchResizer.Enum;
@@ -17,7 +18,7 @@ namespace BatchResizer.ViewModel
         private int _imageTargetWidth;
         private int _imageResizePercentage = 100;
         private int _selectedImageFormatIndex = -1;
-        private int _selectedResizeModeIndex = -1;
+        private int _selectedResizeModeIndex = 0;
         private bool _backupOriginal = true;
         private ResizeService _resizeService;
         private static Logger _logger = LogManager.GetCurrentClassLogger();
@@ -122,6 +123,7 @@ namespace BatchResizer.ViewModel
                 ResizeMode = (ResizeModes)value;
                 RaisePropertyChanged("IsSpecifiedResizeModeSelected");
                 RaisePropertyChanged("IsPercentageResizeModeSelected");
+                RaisePropertyChanged("CanResize");
                 _logger.Debug($"SelectedResizeModeIndex was changed to: {value}.");
             }
         }
@@ -147,9 +149,10 @@ namespace BatchResizer.ViewModel
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(SelectedFolder) || SelectedImageFormatIndex == -1 || ResizeMode == ResizeModes.NotSet) return false;
+                if (string.IsNullOrWhiteSpace(SelectedFolder) || !Directory.Exists(SelectedFolder) || SelectedImageFormatIndex == -1 || ResizeMode == ResizeModes.NotSet) return false;
                 switch (ResizeMode)
                 {
+                    case ResizeModes.NotSet: return false;
                     case ResizeModes.Specified:
                     {
                         if (ImageTargetHeight > Settings.MAX_IMAGE_HEIGHT || ImageTargetWidth > Settings.MAX_IMAGE_WIDTH || ImageTargetHeight < Settings.MIN_IMAGE_HEIGHT || ImageTargetWidth < Settings.MIN_IMAGE_WIDTH) return false;

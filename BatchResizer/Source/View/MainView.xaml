@@ -45,6 +45,7 @@
                     <ComboBoxItem Content="Specified" />
                 </ComboBox>
                 <!--  Image size controls  -->
+                <!--  Width  -->
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock
                         Margin="5"
@@ -55,7 +56,7 @@
                         IsEnabled="{Binding IsSpecifiedResizeModeSelected}"
                         Text="{Binding ImageTargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ToolTip="Target width of the resized image." />
-
+                    <!--  Height  -->
                     <TextBlock
                         Margin="20,5,0,0"
                         Text="Height:"
@@ -91,6 +92,7 @@
                         ToolTip="Percentage to resize the image to. 100% equals original size." />
                     <TextBlock Margin="5" Text="%" />
                 </StackPanel>
+                <!--  Backup checkbox  -->
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <CheckBox
                         Content="Backup original"

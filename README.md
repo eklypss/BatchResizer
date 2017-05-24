@@ -1,5 +1,5 @@
 # BatchResizer
-![](https://ci.appveyor.com/api/projects/status/c5uaymwww4uu88ya)
+[![Build status](https://ci.appveyor.com/api/projects/status/c5uaymwww4uu88ya?svg=true)](https://ci.appveyor.com/project/eklypss/batchresizer)
 
  ![](http://i.imgur.com/AzRU9Hg.png)
 

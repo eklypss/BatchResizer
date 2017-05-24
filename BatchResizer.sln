@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchResizer", "BatchResizer\BatchResizer.csproj", "{7F3D18EA-1450-47CC-A2E6-DE9DBE8BB2FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchResizer.Tests", "BatchResizer.Tests\BatchResizer.Tests.csproj", "{4388AE02-849B-4774-B4F8-42B7978ACEC7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7F3D18EA-1450-47CC-A2E6-DE9DBE8BB2FC} = {7F3D18EA-1450-47CC-A2E6-DE9DBE8BB2FC}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{7F3D18EA-1450-47CC-A2E6-DE9DBE8BB2FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F3D18EA-1450-47CC-A2E6-DE9DBE8BB2FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F3D18EA-1450-47CC-A2E6-DE9DBE8BB2FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4388AE02-849B-4774-B4F8-42B7978ACEC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4388AE02-849B-4774-B4F8-42B7978ACEC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4388AE02-849B-4774-B4F8-42B7978ACEC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4388AE02-849B-4774-B4F8-42B7978ACEC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
